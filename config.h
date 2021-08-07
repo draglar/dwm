@@ -1,21 +1,21 @@
 /* See LICENSE file for copyright and license details. */
 
 /* Constants */
-#define TERMINAL "urxvt"
-#define TERMCLASS "urxvt"
+#define TERMINAL "kitty"
+#define TERMCLASS "kitty"
 
 /* appearance */
-static unsigned int borderpx  = 2;        /* changed from 3 to 2 border pixel of windows */
+static unsigned int borderpx  = 3;        /* changed from 3 to 2 border pixel of windows */
 static unsigned int snap      = 32;       /* snap pixel */
-static unsigned int gappih    = 20;       /* horiz inner gap between windows */
-static unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static unsigned int gappih    = 15;       /*from 30 to 20 to 15 horiz inner gap between windows */
+static unsigned int gappiv    = 7.5;       /*was 10 vert inner gap between windows */
+static unsigned int gappoh    = 7.5;       /*was 10 horiz outer gap between windows and screen edge */
+static unsigned int gappov    = 7.5;       /* was 10 vert outer gap between windows and screen edge */
 static int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
-static char *fonts[]          = { "JetBrainsMono-Medium:size=10", "fontawsome:pixelsize=10:antialias=true:autohint=true"  };
+static char *fonts[]          = { "AnkaCoder-r:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -55,7 +55,7 @@ static const Rule rules[] = {
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
 	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
 	{"Firefox",	NULL,	NULL,		1 << 0,		0,		0,	0,	-1},
-	/*{"jupyter-notebook",	NULL,	NULL,	1<<0,		0,		0,	0,	-1},*/
+	{"virtualbox",	NULL,	NULL,	1<<0,		0,		0,	0,	-1},
 };
 
 /* layout(s) */
@@ -104,6 +104,7 @@ static const Layout layouts[] = {
 /* commands */
 static const char *termcmd[]  = { TERMINAL, NULL };
 static const char *web[]  = {"firefox", NULL};
+static const char *virt[] = {"virtualbox", NULL};
 /*static const char *jupyter[] = {"jupyter-notebook",NULL};*/
 /*
  * Xresources preferences to load at startup
@@ -138,8 +139,8 @@ static Key keys[] = {
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	/* { MODKEY|ShiftMask,		XK_Escape,	spawn,	SHCMD("") }, */
-	{ MODKEY,			XK_grave,	spawn,	SHCMD("dmenuunicode") },
-	/* { MODKEY|ShiftMask,		XK_grave,	togglescratch,	SHCMD("") }, */
+	{ MODKEY,			XK_grave,	spawn,	SHCMD("mi") },
+	{ MODKEY|ShiftMask,		XK_grave,	spawn,	SHCMD("emoji") },/*togglescratch,	SHCMD("mine") },*/
 	TAGKEYS(			XK_1,		0)
 	TAGKEYS(			XK_2,		1)
 	TAGKEYS(			XK_3,		2)
@@ -164,6 +165,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD(TERMINAL " -e pkill -15 Xorg") },
 	{ MODKEY,			XK_w,		spawn,		{.v = web }},
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
+/*	{ MODKEY,			XK_v,		spawn,		{}},*/
+/*	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD(TERMINAL "-e ")},*/
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
 	{ MODKEY,			XK_r,		spawn,		SHCMD(TERMINAL " -e ranger") },
@@ -211,8 +214,8 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	/* { MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("") }, */
-	/* { MODKEY,			XK_c,		spawn,		SHCMD("") }, */
-	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("") }, */
+	 { MODKEY,			XK_c,		spawn,		{.v = virt} }, 
+	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD(TERMINAL "-e aur ") },*/
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */

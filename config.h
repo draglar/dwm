@@ -103,8 +103,10 @@ static const Layout layouts[] = {
 
 /* commands */
 static const char *termcmd[]  = { TERMINAL, NULL };
-static const char *web[]  = {"firefox", NULL};
+/* static const char *web[]  = {"firefox", NULL};*/
+/*static const char *web[]  = {"qutebrowser", NULL};*/
 static const char *virt[] = {"virtualbox", NULL};
+static const char *ware[] = {"vmware", NULL};
 /*static const char *jupyter[] = {"jupyter-notebook",NULL};*/
 /*
  * Xresources preferences to load at startup
@@ -163,8 +165,8 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_q,		killclient,	{0} },
 	{ MODKEY|ShiftMask,		XK_q,		spawn,		SHCMD(TERMINAL " -e pkill -15 Xorg") },
-	{ MODKEY,			XK_w,		spawn,		{.v = web }},
-	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e sudo nmtui") },
+	{ MODKEY,			XK_w,		spawn,		SHCMD("browse")},/*{.v = web }},*/
+	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD(TERMINAL " -e nmtui") },/*was sudo nmtui*/
 /*	{ MODKEY,			XK_v,		spawn,		{}},*/
 /*	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD(TERMINAL "-e ")},*/
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook") },
@@ -215,11 +217,11 @@ static Key keys[] = {
 	{ MODKEY,			XK_x,		incrgaps,	{.i = -3 } },
 	/* { MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("") }, */
 	 { MODKEY,			XK_c,		spawn,		{.v = virt} }, 
-	/* { MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD(TERMINAL "-e aur ") },*/
+	 { MODKEY|ShiftMask,		XK_c,		spawn,		{.v = ware} },
 	/* V is automatically bound above in STACKKEYS */
 	{ MODKEY,			XK_b,		togglebar,	{0} },
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
-	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e jupyter-notebook") },/* {.v =jupyter} will have to change these two to something more usefull*/
+	{ MODKEY,			XK_n,		spawn,		SHCMD("notebooks")}, /*TERMINAL " -e jupyter-notebook") }, {.v =jupyter} will have to change these two to something more usefull*/
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
@@ -261,9 +263,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks);notif volume") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks);notif volume") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks);notif volume") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
@@ -287,8 +289,8 @@ static Key keys[] = {
 	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
-	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 5") },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 5") },
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("xbacklight -inc 5;notif bright") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("xbacklight -dec 5;notif bright") },
 
 	/* { MODKEY|Mod4Mask,              XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,              XK_l,      incrgaps,       {.i = -1 } }, */

@@ -56,6 +56,7 @@ static const Rule rules[] = {
 	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
 	{"Firefox",	NULL,	NULL,		1 << 0,		0,		0,	0,	-1},
 	{"virtualbox",	NULL,	NULL,	1<<0,		0,		0,	0,	-1},
+	{ "Spotify",     NULL,       NULL,        2,         True,     -1 },
 };
 
 /* layout(s) */
@@ -105,6 +106,7 @@ static const Layout layouts[] = {
 static const char *termcmd[]  = { TERMINAL, NULL };
 /* static const char *web[]  = {"firefox", NULL};*/
 /*static const char *web[]  = {"qutebrowser", NULL};*/
+static const char *music[] = {"spotify", NULL};
 static const char *virt[] = {"virtualbox", NULL};
 static const char *ware[] = {"vmware", NULL};
 /*static const char *jupyter[] = {"jupyter-notebook",NULL};*/
@@ -223,7 +225,7 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_n,		spawn,		SHCMD("notebooks")}, /*TERMINAL " -e jupyter-notebook") }, {.v =jupyter} will have to change these two to something more usefull*/
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat; pkill -RTMIN+6 dwmblocks") },
-	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp") },
+	{ MODKEY,			XK_m,		spawn,		{.v = music}},/*SHCMD(TERMINAL " -e ncmpcpp") },*/
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
 	{ MODKEY,			XK_comma,	spawn,		SHCMD("mpc prev") },
 	{ MODKEY|ShiftMask,		XK_comma,	spawn,		SHCMD("mpc seek 0%") },
@@ -256,7 +258,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 
-	{ 0,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
+	{ 0,				XK_Print,	spawn,		SHCMD("maim ~/screenshots/pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 	{ ShiftMask,			XK_Print,	spawn,		SHCMD("maimpick") },
 	{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("dmenurecord kill") },
@@ -266,10 +268,10 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks);notif volume") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks);notif volume") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks);notif volume") },
-	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
-	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
-	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
-	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("mpc play") },
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("playerctl previous") }, /*SHCMD("mpc prev") },*/
+	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("playerctl next")},/*SHCMD("mpc next") },*/
+	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("playerctl play-pause")},/*SHCMD("mpc pause") },*/
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("playerctl play-pause")}, /*SHCMD("mpc play") },*/
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
